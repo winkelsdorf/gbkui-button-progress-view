@@ -13,6 +13,7 @@
 @property (strong, nonatomic) NSString *completeTitle;
 @property (strong, nonatomic) NSString *initialTitle;
 @property (strong, nonatomic) UIFont *font;
+@property (assign, nonatomic) CGFloat cornerRadius;
 @property (assign, nonatomic, getter=isDisabled) BOOL disabled;
 @property (assign, nonatomic, readonly) CGFloat progress;
 @property (assign, nonatomic, readonly) BOOL isProgressing;

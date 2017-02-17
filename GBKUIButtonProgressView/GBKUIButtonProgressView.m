@@ -68,6 +68,8 @@ typedef NS_ENUM(NSInteger, GBKUIButtonProgressState) {
 }
 
 - (void)commonInit {
+    _cornerRadius = 2.5;
+
     UIView *view = [[[NSBundle bundleForClass:[self class]] loadNibNamed:NSStringFromClass([self class]) owner:self options:nil] firstObject];
     [view setTranslatesAutoresizingMaskIntoConstraints:NO];
     
@@ -86,7 +88,7 @@ typedef NS_ENUM(NSInteger, GBKUIButtonProgressState) {
     self.backgroundColor = [UIColor clearColor];
     self.borderView.backgroundColor = [UIColor clearColor];
     self.borderView.layer.borderColor = self.tintColor.CGColor;
-    self.borderView.layer.cornerRadius = 2.5;
+    self.borderView.layer.cornerRadius = self.cornerRadius;
     self.borderView.layer.borderWidth = 1;
     self.titleLabel.font = [UIFont systemFontOfSize:15.0];
     self.titleLabel.textColor = self.tintColor;
@@ -164,7 +166,7 @@ typedef NS_ENUM(NSInteger, GBKUIButtonProgressState) {
                          }
                      }];
     
-    [self animateCornerRadiusTo:2.5];
+    [self animateCornerRadiusTo:self.cornerRadius];
 }
 
 - (void) createArcView {
@@ -191,7 +193,8 @@ typedef NS_ENUM(NSInteger, GBKUIButtonProgressState) {
 }
 
 - (void) createPauseButton {
-    UIImage *pauseImage = [[UIImage imageNamed:@"ic_control_stop"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    UIImage *pauseImage = [[UIImage imageNamed:@"ic_control_stop" inBundle:bundle compatibleWithTraitCollection:nil] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     self.pause.contentMode = UIViewContentModeCenter;
     self.pause.alpha = 0;
     self.pause.image = pauseImage;
@@ -226,6 +229,11 @@ typedef NS_ENUM(NSInteger, GBKUIButtonProgressState) {
 
 - (void)setProgress:(CGFloat)progress animated:(BOOL)animated {
     [self setProgress:progress animated:animated withCompletion:nil];
+}
+
+- (void)setCornerRadius:(CGFloat)radius {
+    _cornerRadius = radius;
+    [self.borderView.layer setCornerRadius:radius];
 }
 
 - (void)setProgress:(CGFloat)progress animated:(BOOL)animated withCompletion:(void(^)())completion {
